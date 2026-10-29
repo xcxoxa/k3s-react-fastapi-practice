@@ -1,0 +1,39 @@
+# Python / virtual environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+# Node / React
+node_modules/
+dist/
+build/
+# Secrets and environment variables
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+kubeconfig
+k3s.yaml
+# Kubernetes secrets / local sensitive resources
+*secret*.yaml
+*secret*.yml
+# Backups and databases
+*.bak
+*.sql
+*.dump
+*.sqlite3
+*.db
+practice-backups/
+# archives and docker images
+*.tar
+*.tar.gz
+*.zip
+# local configs
+.vscode/
+.idea/
+.DS_Store
