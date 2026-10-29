@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-practice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-practice
+  template:
+    metadata:
+      labels:
+        app: fastapi-practice
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker1
+      containers:
+        - name: fastapi
+          image: docker.io/library/fastapi-practice:k3s-v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: fastapi-db-secret
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-practice-service
+spec:
+  selector:
+    app: fastapi-practice
+  ports:
+    - port: 8000
+      targetPort: 8000

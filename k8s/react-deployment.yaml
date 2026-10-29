@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-practice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-practice
+  template:
+    metadata:
+      labels:
+        app: react-practice
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-master
+      containers:
+        - name: react
+          image: docker.io/library/react-practice:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-practice-service
+spec:
+  selector:
+    app: react-practice
+  ports:
+    - port: 80
+      targetPort: 80
